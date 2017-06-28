@@ -1,0 +1,19 @@
+baseURL = "https://wideopen.bio/"
+languageCode = "en-us"
+title = "Wide-Open Datawatch"
+
+
+[[menu.main]]
+  name   = "GEO"
+  url    = "/geo/"
+  weight = 10
+
+[[menu.main]]
+  name   = "SRA"
+  url    = "/sra/"
+  weight = 20
+
+[[menu.main]]
+  name   = "About"
+  url    = "/about"
+  weight = 30

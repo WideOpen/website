@@ -1,0 +1,42 @@
+{{ partial "header.html" . }}
+  {{ $DATA := .Site.Data.private_sra }}
+
+  <div class="content">
+    <center>
+      <h1> Datasets overdue for publication in SRA repository </h1>
+      <h3> Updated: {{ $DATA.update_date }} </h3>
+      <br> An "overdue" dataset is one that is still has yet to be made public even after the first detected reference in a publication.
+      <br>
+      <br> Using data from <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-14-19">SRAdb</a> with timestamp: {{ $DATA.meta_timestamp }}
+      <br>
+    </center>
+    <br/><br/>
+    <h4>Waiting for {{ len $DATA.data }} datasets as of {{ $DATA.update_date }}:</h4>
+    <center>
+      <table border="1" class="dataframe table table-striped table-bordered">
+        <thead>
+          <tr style="text-align: left;">
+            <th>srx</th>
+            <th>published_on</th>
+            <th>journal</th>
+            <th>doi</th>
+            <th>title</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range $DATA.data}}
+            <tr>
+            <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term={{ .srx }}">{{ .srx }}</a></td>
+            <td>{{.published_on}}</td>
+            <td>{{.journal}}</td>
+            <td><a href="http://dx.doi.org/{{ .doi }}">{{ .doi }}</a></td>
+            <td>{{ .title }}</td>
+            </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </center>
+    <br> Source code available on <a href="https://github.com/WideOpen/datawatch">GitHub</a>.
+  </div>
+
+{{ partial "footer.html" . }}

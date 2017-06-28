@@ -1,0 +1,43 @@
+{{ partial "header.html" . }}
+  {{ $GEO := .Site.Data.private_geo }}
+  <div class="content">
+    <center>
+      <h1> Datasets overdue for publication in GEO repository </h1>
+      <h3> Updated: {{ $GEO.update_date }} </h3>
+      <img src="geo_graph.png">
+      <br> An "overdue" dataset is one that is still has yet to be made public even after the first detected reference in a publication.
+      <br>
+      <a href="https://www.ncbi.nlm.nih.gov/geo/info/faq.html#holdprivate">GEO rules</a> require authors to make the dataset public once it appears in a publication.
+      <br> Based on <a href="https://gbnci-abcc.ncifcrf.gov/geo/">GEOmetadb</a> with timestamp: {{ $GEO.meta_timestamp }}
+      <br>
+    </center>
+    <br/><br/>
+    <h4>Waiting for {{ len $GEO.data }} datasets as of {{ $GEO.update_date }}:</h4>
+    <center>
+      <table border="1" class="dataframe table table-striped table-bordered">
+        <thead>
+          <tr style="text-align: left;">
+            <th>gse</th>
+            <th>published_on</th>
+            <th>journal</th>
+            <th>doi</th>
+            <th>title</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range $GEO.data}}
+            <tr>
+            <td><a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={{ .gse }}">{{ .gse }}</a></td>
+            <td>{{.published_on}}</td>
+            <td>{{.journal}}</td>
+            <td><a href="http://dx.doi.org/{{ .doi }}">{{ .doi }}</a></td>
+            <td>{{ .title }}</td>
+            </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </center>
+    <br> Source code available on <a href="https://github.com/WideOpen/datawatch">GitHub</a>.
+  </div>
+
+{{ partial "footer.html" . }}
